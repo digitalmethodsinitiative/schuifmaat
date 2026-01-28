@@ -1,0 +1,19 @@
+{
+  "language": "eng",
+  "license": "MPL-2.0",
+  "title": "Schuifmaat",
+  "upload_type": "software",
+  "version": "v0.1.0",
+  "keywords": [
+    "x", "browser", "extension", "firefox", "scraping"
+  ],
+  "creators": [
+    {
+      "orcid": "0000-0002-0161-8019",
+      "affiliation": "University of Amsterdam",
+      "name": "Stijn Peeters"
+    }
+  ],
+  "access_right": "open",
+  "description": "<p>Schuifmaat is a browser extension that enables actual infinite scroll on X's search result pages. When X refuses to load more posts, it will wait until more results are available (typically after 15 minutes), refresh the page, and resume scrolling.</p><p>This Zenodo record serves as a static, archived version of the Schuifmaat git repository as it is tagged for release. For the latest version of the code, visit the <a href=\"https://github.com/digitalmethodsinitiative/schuifmaat\">GitHub repository</a>.</p>"
+}
