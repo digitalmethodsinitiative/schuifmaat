@@ -1,16 +1,17 @@
 # 📏 Schuifmaat
 
-[![License: MPL 2.0](https://img.shields.io/badge/license-MPL--2.0-informational)](https://github.com/digitalmethodsinitiative/zoekplaatje/blob/main/LICENSE)
+[![License: MPL 2.0](https://img.shields.io/badge/license-MPL--2.0-informational)](https://github.com/digitalmethodsinitiative/schuifmaat/blob/main/LICENSE)
 
-Schuifmaat is a browser extension that enables actual infinite scroll on X's search result pages. When X refuses to load
-more posts, it will wait until more results are available (typically after 15 minutes), refresh the page, and resume
-scrolling.
+Schuifmaat is a browser extension that enables actual infinite scroll on X (fka Twitter)'s search result pages. When X 
+refuses to load more posts, it will wait until more results are available (typically after 15 minutes), refresh the 
+page, and resume scrolling. This way you can (given enough time) scroll through every single tweet for a given user, 
+hashtag, or other type of search query.
 
 This is especially useful when used in combination with 
 [Zeeschuimer](https://github.com/digitalmethodsinitiative/zeeschuimer/), to collect post metadata.
 
 ## Installation
-Schuifmaat is in active development. .xpi files that you can use to install it in your browser are available on the
+Schuifmaat is in sporadic development. .xpi files that you can use to install it in your browser are available on the
 [releases](https://github.com/digitalmethodsinitiative/schuifmaat/releases) page. These are signed and can be installed
 in any Firefox-based browser. If you want to run the latest development version instead, you can [do so from the Firefox
 debugging console](https://www.youtube.com/watch?v=J7el77F1ckg) after cloning the repository locally.
