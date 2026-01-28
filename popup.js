@@ -17,9 +17,10 @@ button_start.addEventListener('click', async () => {
     }
 });
 
-// stop: unset active tab ID, content script will handle the rest
+// stop: unset active tab ID and timeout, content script will handle the rest
 button_stop.addEventListener('click', async () => { // Event listener for the stop button
     await set_prop('scrolling', false);
+    await set_prop('timeout', false);
     write_log("Stopping scroll...");
 });
 
@@ -82,6 +83,7 @@ async function sync_state() {
         button_start.disabled = true;
         button_stop.disabled = false;
         document.querySelector('#other-tab-warning').setAttribute('aria-hidden', 'true');
+        document.querySelector('#serp-warning').setAttribute('aria-hidden', 'true');
         document.querySelector('#scroll-icon').classList.add('scroll');
         document.querySelector('#start-button-text').textContent = 'Scrolling...';
     } else if (running_tab_id) {
@@ -94,6 +96,7 @@ async function sync_state() {
         }
         document.querySelector('#tab-title').textContent = tab_title;
         document.querySelector('#other-tab-warning').setAttribute('aria-hidden', 'false');
+        document.querySelector('#serp-warning').setAttribute('aria-hidden', 'true');
         document.querySelector('#scroll-icon').classList.remove('scroll');
         document.querySelector('#start-button-text').textContent = 'Start';
     } else {
@@ -101,6 +104,8 @@ async function sync_state() {
         const on_eligible_page = tab.url.startsWith('https://x.com/search?q=');
         button_start.disabled = !on_eligible_page;
         button_stop.disabled = true;
+        document.querySelector('#other-tab-warning').setAttribute('aria-hidden', 'true');
+        document.querySelector('#serp-warning').setAttribute('aria-hidden', String(on_eligible_page));
         document.querySelector('#scroll-icon').classList.remove('scroll');
         document.querySelector('#start-button-text').textContent = 'Start';
     }

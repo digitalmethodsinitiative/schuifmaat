@@ -122,15 +122,18 @@
             justify-content: center;
             gap: 1em;
         }
-        #other-tab-warning {
+        #bottom-warning {
             font-size: 10px;
             margin-bottom: 0;
-            visibility: hidden;
+            display: block;
             margin-top: 3.5em;
             text-align: center;
         }
-        #other-tab-warning[aria-hidden=false] {
-            visibility: visible;
+        #bottom-warning p {
+            display: none;
+            margin: 0;
+        }
+        #bottom-warning p[aria-hidden=false] {
             display: block;
         }
         i.scroll {
@@ -170,7 +173,10 @@
 <div id="timeout">
     <i class="fa fa-clock"></i> <span id="countdown-seconds">0</span>
 </div>
-<p id="other-tab-warning"><i class="fa fa-warning" aria-hidden="true"></i> Currently scrolling in tab '<a href="#active-tab" id="tab-title"></a>'</p>
+<div id="bottom-warning">
+    <p id="other-tab-warning"><i class="fa fa-warning" aria-hidden="true"></i> Currently scrolling in tab '<a href="#active-tab" id="tab-title"></a>'</p>
+    <p id="serp-warning" aria-hidden="true">Visit an X search result page to start scrolling.</p>
+</div>
 
 <script src="lib.js"></script>
 <script src="popup.js"></script>
