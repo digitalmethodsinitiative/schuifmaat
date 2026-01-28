@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Schuifmaat</title>
+    <style>
+        @font-face {
+            font-family: 'Vampiro One';
+            src: url("fonts/VampiroOne-Regular.ttf");
+        }
+        h1 {
+            font-size: 2em;
+            font-family: 'Vampiro One', Arial, sans-serif;
+            text-align: center;
+            margin: 0 0 0.5em 0;
+            text-shadow: 0 0 1em #000;
+        }
+        h1:before, h1:after {
+            content: '\2666';
+            margin: 0 0.5em;
+            display: inline-block;
+        }
+        body {
+            margin: 0;
+            padding: 0.75em 1em 1em 1em;
+            font-family: Arial, sans-serif;
+            background: #3F3F37 url('images/pattern_100.gif');
+            color: #D6D6B1;
+            width: 350px;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset 0 0 10px #000;
+        }
+        a {
+            color: inherit;
+        }
+        #logs, #timeout {
+            background-color: #494331;
+            border: 1px solid #878472;
+            box-shadow: 0 0 10px #000;
+            font-size: 13px;
+        }
+        #logs {
+            display: block;
+            flex-grow: 1;
+            padding: 0.75em;
+            margin-top: 1.5em;
+            overflow-y: auto;
+            position: relative;
+            border-radius: 4px;
+            margin-bottom: -2em;
+        }
+        #timeout {
+            align-self: flex-end;
+            border-top-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+            position: relative;
+            display: none;
+            top: calc(-0.25em - 1px + 2.25em);
+            right: 0;
+            margin: -2.25em 1px 0 0;
+            border-bottom: 0;
+            border-right: 0;
+            height: 1.25em;
+            padding: 0.5em;
+            width: fit-content;
+        }
+        #timeout[aria-hidden='false'] {
+            display: block;
+        }
+        #logs p {
+            margin: 0;
+            padding: 0.25em 0;
+        }
+        #logs p:not(:last-child) {
+            border-bottom: 1px solid #3F3F37;
+        }
+        #logs .date {
+            color: #878472;
+        }
+        #logs p .date:before {
+            content: '[';
+        }
+        #logs p .date:after {
+            content: '] ';
+        }
+        button:disabled {
+            cursor: not-allowed;
+        }
+        button {
+            box-shadow: 0 0 10px #000;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 12px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button#start {
+            background-color: #4CAF50;
+        }
+        button#start:disabled {
+            background-color: #6d9f70;
+            color: rgba(214, 214, 177, 0.75);
+        }
+        button#stop {
+            background-color: #e0245e; /* Green for Stop */
+        }
+        button#stop:disabled {
+            background-color: #8a203d;
+        }
+        button#clear {
+            background-color: #4c9baf;
+        }
+        label {
+            margin-left: 8px;
+            user-select: none;
+        }
+        #controls {
+            display: flex;
+            justify-content: center;
+            gap: 1em;
+        }
+        #other-tab-warning {
+            font-size: 10px;
+            margin-bottom: 0;
+            visibility: hidden;
+            margin-top: 3.5em;
+            text-align: center;
+        }
+        #other-tab-warning[aria-hidden=false] {
+            visibility: visible;
+            display: block;
+        }
+        i.scroll {
+            animation: scroll-vertical 1.5s infinite linear;
+            overflow: hidden;
+            height: 3em;
+            padding-bottom: 2em;
+            box-sizing: border-box;
+            clip-path: polygon(0 33%, 100% 33%, 100% 66%, 0 66%);
+            margin-top: -1em;
+            margin-bottom: -1em;
+            font-weight: bold;
+        }
+        @keyframes scroll-vertical {
+            0% {
+                padding-top: 0;
+                padding-bottom: 2em;
+            }
+
+            100% {
+                padding-top: 2em;
+                padding-bottom: 0;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+</head>
+<body>
+<h1>Schuifmaat</h1>
+<div id="controls">
+    <button id="start" class="btn"><i id="scroll-icon" class="fa fa-arrow-down"></i> <span id="start-button-text">Start</span></button>
+    <button id="stop" class="btn" disabled><i class="fa fa-times"></i> Stop</button>
+    <button id="clear" class="btn"><i class="fa fa-trash"></i> Clear log</button>
+</div>
+<div id="logs" aria-live="polite">
+</div>
+<div id="timeout">
+    <i class="fa fa-clock"></i> <span id="countdown-seconds">0</span>
+</div>
+<p id="other-tab-warning"><i class="fa fa-warning" aria-hidden="true"></i> Currently scrolling in tab '<a href="#active-tab" id="tab-title"></a>'</p>
+
+<script src="lib.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
