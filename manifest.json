@@ -2,7 +2,7 @@
   "description": "Real infinite scrolling on X",
   "manifest_version": 2,
   "name": "Schuifmaat",
-  "version": "0.1.0",
+  "version": "0.1.1",
 
   "browser_specific_settings": {
     "gecko": {
