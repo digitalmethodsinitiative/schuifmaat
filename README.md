@@ -32,7 +32,7 @@ The icon of the extension is red when scrolling in the currently active tab, yel
 black when not currently scrolling.
 
 ## Credits & license
-Zoekplaatje was developed by Stijn Peeters for the [Digital Methods Initiative](https://digitalmethods.net) and is
+Schuifmaat was developed by Stijn Peeters for the [Digital Methods Initiative](https://digitalmethods.net) and is
 licensed under the Mozilla Public License, 2.0. Refer to the LICENSE file for more information. It is inspired by and 
 uses elements of [FoxScroller](https://addons.mozilla.org/en-US/firefox/addon/foxscroller/) and 
 [Twitter-Deleter](https://addons.mozilla.org/en-US/firefox/addon/twitter-deleter/)
