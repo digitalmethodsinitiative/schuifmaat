@@ -2,6 +2,8 @@
 
 [![License: MPL 2.0](https://img.shields.io/badge/license-MPL--2.0-informational)](https://github.com/digitalmethodsinitiative/schuifmaat/blob/main/LICENSE)
 
+<p align="center"><img alt="A screenshot of Schuifmaat's status window" src="images/screenshot.png"></p>
+
 Schuifmaat is a browser extension that enables actual infinite scroll on X (fka Twitter)'s search result pages. When X 
 refuses to load more posts, it will wait until more results are available (typically after 15 minutes), refresh the 
 page, and resume scrolling. This way you can (given enough time) scroll through every single tweet for a given user, 
@@ -30,6 +32,9 @@ keep the relevant tab open and active for better results.
 
 The icon of the extension is red when scrolling in the currently active tab, yellow when scrolling in another tab, and 
 black when not currently scrolling.
+
+Currently, the extension assumes that the interface of X will be displayed in English. It may not work with other 
+languages.
 
 ## Credits & license
 Schuifmaat was developed by Stijn Peeters for the [Digital Methods Initiative](https://digitalmethods.net) and is
