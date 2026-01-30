@@ -7,7 +7,7 @@ const button_clear = document.querySelector('button#clear');
 button_start.addEventListener('click', async () => {
     const [tab] = await browser.tabs.query({active: true, currentWindow: true});
     await set_prop('scrolling', tab.id);
-    await set_prop('timeout', false);
+    await set_prop(`timeout:${tab.id}`, false);
     try {
         // send a message to the content script running in that tab
         await browser.tabs.sendMessage(tab.id, {action: 'start'});
@@ -19,8 +19,9 @@ button_start.addEventListener('click', async () => {
 
 // stop: unset active tab ID and timeout, content script will handle the rest
 button_stop.addEventListener('click', async () => { // Event listener for the stop button
+    const active_tab_id = await get_prop('scrolling');
     await set_prop('scrolling', false);
-    await set_prop('timeout', false);
+    await set_prop(`timeout:${active_tab_id}`, false);
     write_log("Stopping scroll...");
 });
 
@@ -54,9 +55,10 @@ async function sync_state() {
     const log_container = document.querySelector('#logs');
     const log = await get_prop('log', []);
     const [tab] = await browser.tabs.query({active: true, currentWindow: true});
+    let running_tab_id = await get_prop('scrolling', false);
 
     // set timeout ticker
-    const timeout = await get_prop('timeout', 0);
+    const timeout = await get_prop(`timeout:${running_tab_id}`, 0);
     let timeout_remaining;
     if (timeout) {
         timeout_remaining = Math.round((timeout - Date.now()) / 1000);
@@ -69,7 +71,6 @@ async function sync_state() {
     }
 
     // check if there is a tab that is being scrolled in
-    let running_tab_id = await get_prop('scrolling', false);
     let running_tab;
     try {
         running_tab = await browser.tabs.get(running_tab_id);

@@ -62,8 +62,8 @@ async function refresh() {
  *
  * @returns {Promise<void>}
  */
-async function blocking_timeout() {
-    const timeout = await get_prop('timeout');
+async function blocking_timeout(tab_id) {
+    const timeout = await get_prop(`timeout:${tab_id}`);
     if(!timeout) {
         return;
     }
@@ -80,7 +80,7 @@ async function blocking_timeout() {
     }
 
     write_log('Resuming scroll');
-    await set_prop('timeout', false);
+    await set_prop(`timeout:${tab_id}`, false);
 }
 
 /**
@@ -90,18 +90,18 @@ async function blocking_timeout() {
  */
 let first_loop = true;
 async function scroll_page() {
-    let is_running = await get_prop('scrolling');
+    let active_tab_id = await get_prop('scrolling');
 
     // main loop - scroll until we can no longer scroll, then do something clever
-    while (is_running) {
-        is_running = await get_prop('scrolling');
+    while (active_tab_id) {
+        active_tab_id = await get_prop('scrolling');
 
         // check if we're waiting for the rate limit to clear
         // if so, wait (and periodically log an update)
         if(!first_loop) {
             // always scroll at least once before waiting, in case we
             // immediately get results after refreshing
-            await blocking_timeout();
+            await blocking_timeout(active_tab_id);
         }
 
         // are we testing if a retry makes new posts appear?
@@ -109,7 +109,7 @@ async function scroll_page() {
             if (loops_since_retry > 1) {
                 // wait and refresh
                 write_log('No new posts after retrying. Refreshing before checking again.');
-                await set_prop('timeout', Date.now() + (5 * 60 * 1000));
+                await set_prop(`timeout:${active_tab_id}`, Date.now() + (5 * 60 * 1000));
                 // this reloads the page and the content script, so nothing
                 // after this line will be executed!
                 await refresh();
@@ -150,7 +150,7 @@ async function scroll_page() {
         } else {
             // reset timeout, since we have data again
             loops_since_retry = 0;
-            await set_prop('timeout', false);
+            await set_prop(`timeout:${active_tab_id}`, false);
         }
         first_loop = false;
     }
