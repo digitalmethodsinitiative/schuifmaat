@@ -144,6 +144,14 @@ async function scroll_page() {
 
         // if we have no new tweets, start counting down until we consider ourselves rate-limited
         if (!last_seen_post_id || last_seen_post_id === previous_last_post_id) {
+            // do we have a 'no results' message?
+            // if so, stop scrolling
+            const empty_results = document.querySelector('*[data-testid=empty_state_header_text]');
+            if(empty_results) {
+                write_log('No search results, stopping scroll')
+                await set_prop('scrolling', false);
+                break;
+            }
             write_log(`No new posts detected in this loop (${loops_since_retry + 1})`);
             if (!testing_retry) {
                 testing_retry = true;

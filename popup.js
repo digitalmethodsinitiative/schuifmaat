@@ -11,7 +11,6 @@ button_start.addEventListener('click', async () => {
     try {
         // send a message to the content script running in that tab
         await browser.tabs.sendMessage(tab.id, {action: 'start'});
-        write_log("Started scrolling.");
     } catch (e) {
         write_log(`❌ Error sending message '${message.action}' to tab: ${e.message}. Your active tab needs to be an x.com search result page.`);
     }
