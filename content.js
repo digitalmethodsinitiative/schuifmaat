@@ -35,7 +35,7 @@ async function refresh() {
     // than the last seen post
     if (last_seen_post_id) {
         new_url = window.location.href;
-        const new_max_id = parseInt(last_seen_post_id) - 1;
+        const new_max_id = BigInt(last_seen_post_id) - BigInt(1);
         const old_q = new_url.match(/q=([^&]+)&/)[1];
         let q = decodeURIComponent(old_q);
         if (q.indexOf('max_id:') >= 0) {
@@ -43,7 +43,7 @@ async function refresh() {
             q = q.replace(/max_id:[0-9]+/g, 'max_id:' + new_max_id);
         } else {
             // no max_id parameter yet
-            q = q + ' max_id:' + new_max_id;
+            q = q + ' max_id:' + new_max_id.toString();
         }
         q = encodeURIComponent(q);
         new_url = new_url.replace(old_q, q);
@@ -138,8 +138,7 @@ async function scroll_page() {
         const last_tweet = document.querySelector('article[data-testid=tweet]');
         if (last_tweet) {
             const permalink = last_tweet.querySelector("div[data-testid='User-Name'] a[role=link][aria-label]");
-            const post_id = permalink.getAttribute('href').split('/').pop();
-            last_seen_post_id = post_id;
+            last_seen_post_id = permalink.getAttribute('href').split('/').pop();
         }
 
         // if we have no new tweets, start counting down until we consider ourselves rate-limited
