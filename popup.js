@@ -63,7 +63,7 @@ async function sync_state() {
     if (timeout) {
         timeout_remaining = Math.round((timeout - Date.now()) / 1000);
     }
-    if (timeout_remaining) {
+    if (timeout_remaining && timeout_remaining > 0) {
         document.querySelector('#countdown-seconds').textContent = timeout_remaining;
         document.querySelector('#timeout').setAttribute('aria-hidden', 'false');
     } else {
