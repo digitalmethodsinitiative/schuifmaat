@@ -68,15 +68,16 @@ async function blocking_timeout(tab_id) {
         return;
     }
 
-    let i = 0;
+    let alerted = false;
     while(timeout > Date.now()) {
-        await wait(500);
-        if(i % 120 === 0) {
-            // update every 60 seconds (120 * 500)
+        if(!alerted) {
+            // we only alert inside the loop because if the timeout had
+            // already expired somehow, we don't need the message
             const seconds = Math.round((timeout - Date.now()) / 1000);
-            write_log(`Waiting ${seconds} seconds for rate limit reset...`);
+            write_log(`Waiting ${seconds} seconds to check for rate limit reset...`);
+            alerted = true;
         }
-        i += 1;
+        await wait(1000);
     }
 
     write_log('Resuming scroll');
