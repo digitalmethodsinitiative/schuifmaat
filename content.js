@@ -135,7 +135,7 @@ async function scroll_page() {
 
         // do we have new tweets?
         const previous_last_post_id = last_seen_post_id;
-        const last_tweet = document.querySelector('article[data-testid=tweet]');
+        const last_tweet = Array.from(document.querySelectorAll('article[data-testid=tweet]')).pop();
         if (last_tweet) {
             const permalink = last_tweet.querySelector("div[data-testid='User-Name'] a[role=link][aria-label]");
             last_seen_post_id = permalink.getAttribute('href').split('/').pop();
