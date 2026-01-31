@@ -1,5 +1,6 @@
 # 📏 Schuifmaat
 
+[![DOI: 10.5281/zenodo.18432553](https://zenodo.org/badge/DOI/10.5281/zenodo.18432553.svg)](https://doi.org/10.5281/zenodo.18432553)
 [![License: MPL 2.0](https://img.shields.io/badge/license-MPL--2.0-informational)](https://github.com/digitalmethodsinitiative/schuifmaat/blob/main/LICENSE)
 
 <p align="center"><img alt="A screenshot of Schuifmaat's status window" width="300" src="images/screenshot.png"></p>
