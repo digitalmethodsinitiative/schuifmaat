@@ -4,25 +4,32 @@ const button_clear = document.querySelector('button#clear');
 
 // start button: set currently active tab as the tab to scroll in and send a
 // message to the content script
-button_start.addEventListener('click', async () => {
-    const [tab] = await browser.tabs.query({active: true, currentWindow: true});
-    await set_prop('scrolling', tab.id);
-    await set_prop(`timeout:${tab.id}`, false);
+async function start_scroll(tab_id = null) {
+    if (!tab_id) {
+        const [tab] = await browser.tabs.query({active: true, currentWindow: true});
+        tab_id = tab.id;
+    }
+    await set_prop('scrolling', tab_id);
+    await set_prop(`timeout:${tab_id}`, false);
     try {
         // send a message to the content script running in that tab
-        await browser.tabs.sendMessage(tab.id, {action: 'start'});
+        await browser.tabs.sendMessage(tab_id, {action: 'start'});
     } catch (e) {
         write_log(`❌ Error sending message '${message.action}' to tab: ${e.message}. Your active tab needs to be an x.com search result page.`);
     }
-});
+}
+
+button_start.addEventListener('click', start_scroll);
 
 // stop: unset active tab ID and timeout, content script will handle the rest
-button_stop.addEventListener('click', async () => { // Event listener for the stop button
+async function stop_scroll() { // Event listener for the stop button
     const active_tab_id = await get_prop('scrolling');
     await set_prop('scrolling', false);
     await set_prop(`timeout:${active_tab_id}`, false);
     write_log("Stopping scroll...");
-});
+}
+
+button_stop.addEventListener('click', stop_scroll);
 
 // clear log - just delete the logs from storage
 button_clear.addEventListener('click', async () => {
@@ -130,4 +137,32 @@ async function sync_state() {
         // always scroll to the bottom of the log after an update
         log_container.scrollTop = log_container.scrollHeight;
     }
+}
+
+/**
+ * Functions to allow starting the scroll programmatically without having to
+ * use the GUI. Can pass a tab ID or a URL, for a URL the tab ID will be
+ * determined. If no tab matches the URL nothing happens.
+ */
+window.enable_schuifmaat = async function (tab_id) {
+    if (typeof tab_id == 'string' || tab_id instanceof String) {
+        const [tab] = await browser.tabs.query({url: tab_id});
+        if (tab) {
+            tab_id = tab.id;
+        }
+    }
+    await start_scroll(tab_id);
+}
+
+window.disable_schuifmaat = async function () {
+    await stop_scroll();
+}
+
+window.is_schuifmaat_scrolling = function () {
+    let result = null;
+    get_prop('scrolling', false).then((running_tab_id) => { console.log('ok'); result = running_tab_id; });
+    while(true) {
+        if(result !== null) { break;}
+    }
+    return result;
 }
