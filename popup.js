@@ -19,7 +19,7 @@ async function start_scroll(tab_id = null) {
     }
 }
 
-button_start.addEventListener('click', start_scroll);
+button_start.addEventListener('click', () => start_scroll());
 
 // stop: unset active tab ID and timeout, content script will handle the rest
 async function stop_scroll() { // Event listener for the stop button
@@ -29,12 +29,10 @@ async function stop_scroll() { // Event listener for the stop button
     write_log("Stopping scroll...");
 }
 
-button_stop.addEventListener('click', stop_scroll);
+button_stop.addEventListener('click', () => stop_scroll());
 
 // clear log - just delete the logs from storage
-button_clear.addEventListener('click', async () => {
-    await clear_log();
-})
+button_clear.addEventListener('click', () => clear_log());
 
 // when scrolling but looking at another tab, clicking this link in the popup
 // switches to the tab that is being scrolled in
